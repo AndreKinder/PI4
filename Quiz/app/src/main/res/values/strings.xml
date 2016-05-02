@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Quiz</string>
-    <string name="action_settings">Settings</string>
+    <string name="texto_login">Login</string>
+    <string name="texto_senha">Senha</string>
+    <string name="login_hint">E-mail</string>
+    <string name="senha_hint">Senha</string>
+    <string name="btn_acesso">Acessar</string>
+    <string name="user_required">Usuário Obrigatório</string>
+    <string name="pass_required">Senha é Obrigatória</string>
+    <string name="autentication">Autenticado</string>
 </resources>
