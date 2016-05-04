@@ -1,6 +1,7 @@
 package br.com.diehard.quiz;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import static br.com.diehard.quiz.Validador.validateEmail;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText emailLogin;
@@ -70,6 +73,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v){
         if (v.getId()==R.id.btn_acesso){
+
+            Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
+            startActivity(i);
+
             if (validar()){
                 /**
                  * WebService de autenticação do Usuário
@@ -91,6 +98,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         return (!isEmptyFields(email, password));
     }
 
+
+
     private boolean isEmptyFields(String email, String password){
 
         if (TextUtils.isEmpty(email)) {
@@ -102,8 +111,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             senhaLogin.setError(resources.getString(R.string.pass_required));
             return true;
         }
+
+    boolean email_valido = validateEmail(email);{
+            if (!email_valido) {
+                emailLogin.setError("Email inválido");
+                emailLogin.setFocusable(true);
+                emailLogin.requestFocus();
+            }
         return false;
         }
+    }
+
 
     private void clearErrorFields(EditText... editTexts) {
         for (EditText editText : editTexts) {

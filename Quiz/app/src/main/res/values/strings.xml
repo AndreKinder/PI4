@@ -7,5 +7,6 @@
     <string name="btn_acesso">Acessar</string>
     <string name="user_required">Usuário Obrigatório</string>
     <string name="pass_required">Senha é Obrigatória</string>
+    <string name="email_valido">Entre com um e-mail válido</string>
     <string name="autentication">Autenticado</string>
 </resources>
