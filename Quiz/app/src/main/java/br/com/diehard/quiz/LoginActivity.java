@@ -3,6 +3,7 @@ package br.com.diehard.quiz;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,6 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static br.com.diehard.quiz.Validador.validateEmail;
 
@@ -74,15 +84,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v){
         if (v.getId()==R.id.btn_acesso){
 
-            Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
-            startActivity(i);
-
             if (validar()){
-                /**
-                 * WebService de autenticação do Usuário
-                 */
 
-                Toast.makeText(this, resources.getString(R.string.autentication), Toast.LENGTH_LONG).show();
+                String email = emailLogin.getText().toString().trim();
+                String password = senhaLogin.getText().toString().trim();
+
+                //SERVICES
+                Network e = new Network();
+                e.execute((Void)null);
+
+                //msg de auteticado
+                //Toast.makeText(this, resources.getString(R.string.autentication), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -126,6 +138,65 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void clearErrorFields(EditText... editTexts) {
         for (EditText editText : editTexts) {
             editText.setError(null);
+        }
+    }
+
+    //SERVICO
+    public class Network extends AsyncTask<Void, Void, String>
+    {
+        protected String doInBackground (Void... params)
+        {
+            URL url = null;
+            String result = "";
+
+            try {
+                //url = new URL("https://viacep.com.br/ws/01001000/json/unicode/");
+                url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
+
+                HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                InputStream in = con.getInputStream();
+
+                BufferedReader streamReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuilder responseStrBuilder = new StringBuilder();
+
+                String inputStr;
+                while((inputStr = streamReader.readLine()) != null )
+                    responseStrBuilder.append(inputStr);
+
+                result = responseStrBuilder.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        protected void onPostExecute(String result)
+        {
+            if(result != "") {
+                try {
+                    JSONObject json = new JSONObject(result);
+
+                    //salvar no session e mudar para a proxima tela
+                    ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
+                    ps.codParticipante = json.getInt("codParticipante");
+                    ps.email = json.getString("email");
+                    ps.nome = json.getString("nmParticipante");
+
+                    //proxima activity
+                    Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
+                    startActivity(i);
+
+                }catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
+                }
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Usuario ou/e senha invalido", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
