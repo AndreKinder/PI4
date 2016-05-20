@@ -9,5 +9,8 @@ public class TelaValidacao extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_validacao);
+
+        ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
+        String as = ps.nome;
     }
 }
