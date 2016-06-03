@@ -5,11 +5,20 @@
     <string name="login_hint">E-mail</string>
     <string name="senha_hint">Senha</string>
     <string name="btn_acesso">Acessar</string>
+    <string name="btn_jogo">Iniciar o Jogo</string>
     <string name="user_required">Usuário Obrigatório</string>
     <string name="pass_required">Senha é Obrigatória</string>
     <string name="email_valido">Entre com um e-mail válido</string>
     <string name="autentication">Autenticado</string>
+    <string name="regras">Regras do Jogo: </string>
     <string name="title_activity_este">Sign in</string>
+
+    <!-- Strings de texto das regras -->
+
+    <string name="regra1">. O jogo só terá início após os grupos estarem fechados;</string>
+    <string name="regra2">. Você tem xx segundos para responder a questão;</string>
+    <string name="regra3">. A cada acerto será computado xx pontos na pontuação total;</string>
+    <string name="regra4">. A cada erro será removido xx pontos na pontuação total;</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
