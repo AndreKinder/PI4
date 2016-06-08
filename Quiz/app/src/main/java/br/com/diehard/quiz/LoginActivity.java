@@ -150,6 +150,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             String result = "";
 
             try {
+                //TODO: colocar o caminho certo do servidor
                 //url = new URL("https://viacep.com.br/ws/01001000/json/unicode/");
                 url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
 
