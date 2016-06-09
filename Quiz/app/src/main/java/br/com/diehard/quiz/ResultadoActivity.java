@@ -1,10 +1,12 @@
 package br.com.diehard.quiz;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,6 +27,7 @@ public class ResultadoActivity extends AppCompatActivity {
     private ViewGroup group;
     private Context context;
     private TextView campeao;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class ResultadoActivity extends AppCompatActivity {
     //SERVICO
     public class Network extends AsyncTask<Integer, Void, String>
     {
+        protected void onPreExecute(){
+            progress = ProgressDialog.show(context, "", "Calculando os pontos dos grupos...", true);
+        }
+
         protected String doInBackground (Integer... idEvento)
         {
             URL url = null;
@@ -101,12 +108,23 @@ public class ResultadoActivity extends AppCompatActivity {
                         campeao.setText(itemJson.getString("nmGrupo"));
                     }
                 }
-
-
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
             }
+            progress.dismiss();
         }
+    }
+
+    //sobreescrita para inutilizar o botao voltar
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event)
+    {
+        if(keycode == KeyEvent.KEYCODE_BACK)
+        {
+            return true;
+        }
+        return super.onKeyDown(keycode, event);
     }
 }

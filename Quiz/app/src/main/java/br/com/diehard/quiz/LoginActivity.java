@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -199,5 +200,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "Usuario ou/e senha invalido", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    //sobreescrita para inutilizar o botao voltar
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event)
+    {
+        if(keycode == KeyEvent.KEYCODE_BACK)
+        {
+            return true;
+        }
+        return super.onKeyDown(keycode, event);
     }
 }
