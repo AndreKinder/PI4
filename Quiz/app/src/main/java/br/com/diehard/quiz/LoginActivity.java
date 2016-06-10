@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static br.com.diehard.quiz.Validador.validateEmail;
@@ -195,6 +194,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     //Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
                     Intent i = new Intent(LoginActivity.this, Tela_Aquecimento.class);
                     startActivity(i);
+
+                    /*Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
+                    Bundle b = new Bundle();
+                    b.putString("evento", "34409"); //Your id
+                    b.putString("participanteId", "258"); //Your id
+                    b.putString("proximaTela", TelaValidacao.class.getName());
+                    i.putExtras(b); //Put your id to your next Intent
+                    startActivity(i);*/
 
                 }catch (Exception e)
                 {
