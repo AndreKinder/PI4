@@ -153,13 +153,13 @@ public class Tela_Aquecimento extends AppCompatActivity {
                     }
                     else if(json.getString("codTipoQuestao").equalsIgnoreCase("A"))
                     {
-                        Intent i = new Intent(Tela_Aquecimento.this, Jogo.class);
+                        Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
                         i.putExtra("idEvento", idEvento);
                         startActivity(i);
                     }
                     else if(json.getString("codTipoQuestao").equalsIgnoreCase("V"))
                     {
-                        Intent i = new Intent(Tela_Aquecimento.this, Jogo.class);
+                        Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
                         i.putExtra("idEvento", idEvento);
                         startActivity(i);
                     }
