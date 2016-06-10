@@ -59,7 +59,7 @@ public class ResultadoActivity extends AppCompatActivity {
 
             try {
                 //TODO: colocar o caminho certo do servidor
-                url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resultado/"+idEvento);
 
                 HttpURLConnection con = (HttpURLConnection)url.openConnection();
                 InputStream in = con.getInputStream();
@@ -83,7 +83,7 @@ public class ResultadoActivity extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "[{\"nmGrupo\":\"grupo 1\",\"pontosGrupo\":2,\"pontosTotal\":13},{\"nmGrupo\":\"grupo 2\",\"pontosGrupo\":11,\"pontosTotal\":13},{\"nmGrupo\":\"yo\",\"pontosGrupo\":0,\"pontosTotal\":13}]";
+            //result = "[{\"nmGrupo\":\"grupo 1\",\"pontosGrupo\":2,\"pontosTotal\":13},{\"nmGrupo\":\"grupo 2\",\"pontosGrupo\":11,\"pontosTotal\":13},{\"nmGrupo\":\"yo\",\"pontosGrupo\":0,\"pontosTotal\":13}]";
             try {
                 JSONArray json = new JSONArray(result);
                 int vencedor = 0;

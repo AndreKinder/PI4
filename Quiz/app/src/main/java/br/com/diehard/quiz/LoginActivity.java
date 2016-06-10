@@ -31,6 +31,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button btnacesso;
     private Resources resources;
 
+    private String email;
+    private String senha;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +90,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
             if (validar()){
 
-                String email = emailLogin.getText().toString().trim();
-                String password = senhaLogin.getText().toString().trim();
+                email = emailLogin.getText().toString().trim();
+                senha = senhaLogin.getText().toString().trim();
 
                 //SERVICES
                 Network e = new Network();
@@ -152,8 +155,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
             try {
                 //TODO: colocar o caminho certo do servidor
-                //url = new URL("https://viacep.com.br/ws/01001000/json/unicode/");
-                url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/participante/"+ email +"/"+ senha);
 
                 HttpURLConnection con = (HttpURLConnection)url.openConnection();
                 InputStream in = con.getInputStream();
@@ -185,9 +187,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     ps.codParticipante = json.getInt("codParticipante");
                     ps.email = json.getString("email");
                     ps.nome = json.getString("nmParticipante");
+                    //TODO:colocar o grupo certo depois
+                    ps.codGrupo = 1;
 
                     //proxima activity
-                    Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
+                    //TODO:colocar proxima tela certa
+                    //Intent i = new Intent(LoginActivity.this, TelaValidacao.class);
+                    Intent i = new Intent(LoginActivity.this, Tela_Aquecimento.class);
                     startActivity(i);
 
                 }catch (Exception e)

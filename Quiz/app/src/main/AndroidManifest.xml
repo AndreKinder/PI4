@@ -24,7 +24,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".TelaValidacao" />
         <activity android:name=".Tela_Aquecimento" />
-        <activity android:name=".ResultadoActivity"></activity>
+        <activity android:name=".ResultadoActivity" />
+        <activity android:name=".Jogo"></activity>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ public class ParticipanteSingleton {
     public String nome;
     public String email;
     public Integer codParticipante;
+    public Integer codGrupo;
 
 
     public static ParticipanteSingleton getInstance()

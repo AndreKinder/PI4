@@ -23,11 +23,16 @@ import java.net.URL;
 public class Tela_Aquecimento extends AppCompatActivity {
 
     private int idEvento;
+    private int idGrupo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela__aquecimento);
+
+        ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
+        //TODO:colocar o grupo nosingleton
+        idGrupo = ps.codGrupo;
 
         //get id do evento
         Intent intent = getIntent();
@@ -48,7 +53,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
 
             try {
                 //TODO: colocar o caminho certo do servidor
-                url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/jogo/"+idEvento);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -107,7 +112,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
 
             try {
                 //TODO: colocar o caminho certo do servidor
-                url = new URL("http://localhost:8089/RESTfulExample/rest/participante/wesley@safadao.com/1");
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/questao/"+idEvento+"/"+idGrupo);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -133,14 +138,16 @@ public class Tela_Aquecimento extends AppCompatActivity {
             boolean statusQuestao = false;
 
             //TODO:apagar essa linha depois
-            //result = "{\"codTipoQuestao\":\"A\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
-            result = "{\"codTipoQuestao\":null,\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
+            result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
+            //result = "{\"codTipoQuestao\":null,\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
             try {
                 JSONObject json = new JSONObject(result);
 
                 if(!json.getString("codTipoQuestao").equals("null")){
                     //TODO: mudar para a activity da questão
-                    Intent i = new Intent(Tela_Aquecimento.this, ResultadoActivity.class);
+                    Intent i = new Intent(Tela_Aquecimento.this, Jogo.class);
+                    i.putExtra("idEvento", idEvento);
+                    i.putExtra("tipoQuestao", json.getString("codTipoQuestao"));
                     startActivity(i);
                     statusQuestao = true;
                 }
