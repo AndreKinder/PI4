@@ -11,13 +11,13 @@
     tools:context="br.com.diehard.quiz.ResultadoActivity">
 
     <TextView
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/texto_titulo_resultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:gravity="center"/>
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal"
+    android:text="@string/texto_titulo_resultado"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="35sp"
+    android:gravity="center"/>
 
     <ScrollView
         android:layout_width="wrap_content"
