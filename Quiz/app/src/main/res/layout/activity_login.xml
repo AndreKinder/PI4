@@ -73,7 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/btn_acesso"
         android:textStyle="bold"
-        android:theme="@style/TextAppearance.AppCompat.Widget.Button"
         android:elevation="@dimen/fab_margin"
         android:textColor="#27408b"
         android:shadowColor="#028482" />

@@ -163,9 +163,6 @@ public class Tela_Aquecimento extends AppCompatActivity {
                         i.putExtra("idEvento", idEvento);
                         startActivity(i);
                     }
-
-
-
                     statusQuestao = true;
                 }
 
