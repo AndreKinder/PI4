@@ -8,11 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.diehard.quiz.LoginActivity">
+    tools:context="br.com.diehard.quiz.LoginActivity"
+    android:elevation="@dimen/design_fab_translation_z_pressed">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="72dp"
+        android:layout_height="100dp"
         android:src="@drawable/quizlogo"
         android:layout_marginBottom="24dp"
         android:layout_gravity="center_horizontal" />
@@ -22,7 +23,12 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/texto_login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#27408b"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:focusableInTouchMode="false" />
 
     <EditText
         android:orientation="horizontal"
@@ -32,14 +38,19 @@
         android:singleLine="true"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColorHint="#27408b" />
 
     <TextView
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:text="@string/texto_senha"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textColor="#27408b"
+        android:textStyle="bold" />
 
     <EditText
         android:orientation="horizontal"
@@ -50,7 +61,9 @@
         android:maxLength="10"
         android:hint="@string/senha_hint"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColorHint="#27408b"
+        android:textSize="20dp" />
 
     <Button
         android:orientation="horizontal"
@@ -58,7 +71,12 @@
         android:text="@string/btn_acesso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/btn_acesso"/>
+        android:layout_marginTop="@dimen/btn_acesso"
+        android:textStyle="bold"
+        android:theme="@style/TextAppearance.AppCompat.Widget.Button"
+        android:elevation="@dimen/fab_margin"
+        android:textColor="#27408b"
+        android:shadowColor="#028482" />
 
 
 </LinearLayout>
