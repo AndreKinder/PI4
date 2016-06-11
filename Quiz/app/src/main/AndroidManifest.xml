@@ -26,7 +26,8 @@
         <activity android:name=".ResultadoActivity" />
         <activity android:name=".JogoTexto" />
         <activity android:name=".Evento" />
-        <activity android:name=".JogoVerdadeiro"></activity>
+        <activity android:name=".JogoVerdadeiro" />
+        <activity android:name=".JogoAlternativa"></activity>
     </application>
 
 </manifest>

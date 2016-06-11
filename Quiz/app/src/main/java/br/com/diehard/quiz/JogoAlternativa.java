@@ -4,14 +4,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -20,25 +25,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class JogoVerdadeiro extends AppCompatActivity {
+public class JogoAlternativa extends AppCompatActivity {
 
     private int idEvento;
     private int idGrupo;
     private int idQuestao;
-    private Boolean blnResposta;
-
-    private TextView pergunta;
-    private Button btn_true;
-    private Button btn_false;
-
+    private String idAlternativa;
 
     private Context context;
     private ProgressDialog progress;
+    private ViewGroup group;
+    private Button enviar;
+
+    private TextView pergunta;
+    private EditText respoderAlternativa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jogo_verdadeiro);
+        setContentView(R.layout.activity_jogo_alternativa);
 
         ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
         //TODO:colocar o grupo nosingleton
@@ -50,22 +55,14 @@ public class JogoVerdadeiro extends AppCompatActivity {
 
         context = this;
         pergunta = (TextView) findViewById(R.id.texto_pergunta);
+        respoderAlternativa = (EditText) findViewById(R.id.edit_id_alternativa);
 
-        btn_true = (Button) findViewById(R.id.btn_true);
-        btn_true.setOnClickListener(new Button.OnClickListener() {
+        enviar = (Button) findViewById(R.id.btn_confirmar_alternatviva);
+        enviar.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v)
             {
-                blnResposta = true;
-            NetworkResposta r = new NetworkResposta();
-            r.execute((Void) null);
-            }
-        });
+                idAlternativa = respoderAlternativa.getText().toString().trim();
 
-        btn_false = (Button) findViewById(R.id.btn_false);
-        btn_false.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v)
-            {
-                blnResposta = false;
                 NetworkResposta r = new NetworkResposta();
                 r.execute((Void) null);
             }
@@ -73,8 +70,6 @@ public class JogoVerdadeiro extends AppCompatActivity {
 
         NetworkQuestao e = new NetworkQuestao();
         e.execute((Void) null);
-
-
     }
 
     //Servico de buscar questao ativa
@@ -90,7 +85,6 @@ public class JogoVerdadeiro extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/questao/"+idEvento+"/"+idGrupo);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -115,22 +109,33 @@ public class JogoVerdadeiro extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":5,\"textoQuestao\":\"Você sabe como foi feito o mundo?\",\"alternativas\":null,\"tempo\":null,\"codAssunto\":5}";
+            result = "{\"codTipoQuestao\":\"A\",\"textoQuestao\":\"Teste 2\",\"tempo\":null,\"alternativas\":[{\"textoAlternativa\":\"Alternativa 1\",\"codAlternativa\":1,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 2\",\"codAlternativa\":2,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 3\",\"codAlternativa\":3,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 4\",\"codAlternativa\":4,\"codQuestao\":null}],\"codQuestao\":6,\"codAssunto\":null}";
             try {
                 JSONObject json = new JSONObject(result);
 
                 pergunta.setText(json.getString("textoQuestao"));
                 idQuestao = json.getInt("codQuestao");
 
+                group = (ViewGroup) findViewById(R.id.container);
+
+                JSONArray jsonarray = new JSONArray(json.getJSONArray("alternativas").toString());
+
+                for(int i = 0; jsonarray.length() > i ;i++) {
+                    JSONObject itemJson = jsonarray.getJSONObject(i);
+
+                    LinearLayout item = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.alternativaitem, group, false);
+                    TextView id_alternativa = (TextView) item.findViewById(R.id.id_alternativa);
+                    TextView texto_alternativa = (TextView) item.findViewById(R.id.texto_alternativa);
+                    //id_alternativa.setText(itemJson.getString("codAlternativa"));
+                    texto_alternativa.setText(itemJson.getString("codAlternativa")+" - "+itemJson.getString("textoAlternativa"));
+                    group.addView(item);
+                }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
             }
 
             progress.dismiss();
         }
-
-
-
     }
     public class NetworkResposta extends AsyncTask<Void, Void, String>
     {
@@ -145,7 +150,7 @@ public class JogoVerdadeiro extends AppCompatActivity {
 
             try {
                 //TODO: colocar o caminho certo do servidor
-                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/0/"+blnResposta);
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/"+idAlternativa+"/");
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -168,15 +173,13 @@ public class JogoVerdadeiro extends AppCompatActivity {
 
         protected void onPostExecute(String result)
         {
-            boolean statusQuestao = false;
-
             //TODO:apagar essa linha depois
             result = "true";
             try {
                 //JSONObject json = new JSONObject(result);
                 if(result.equals("true"))
                 {
-                    Intent i = new Intent(JogoVerdadeiro.this, Tela_Aquecimento.class);
+                    Intent i = new Intent(JogoAlternativa.this, Tela_Aquecimento.class);
                     startActivity(i);
                 }
                 else
@@ -190,5 +193,14 @@ public class JogoVerdadeiro extends AppCompatActivity {
             progress.dismiss();
         }
     }
-
+    //sobreescrita para inutilizar o botao voltar
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event)
+    {
+        if(keycode == KeyEvent.KEYCODE_BACK)
+        {
+            return true;
+        }
+        return super.onKeyDown(keycode, event);
+    }
 }
