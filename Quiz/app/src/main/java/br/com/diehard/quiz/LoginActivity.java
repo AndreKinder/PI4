@@ -1,6 +1,7 @@
 package br.com.diehard.quiz;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,27 +24,42 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.com.pi.pi4.GroupSelectionActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 import static br.com.diehard.quiz.Validador.validateEmail;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
-    private EditText emailLogin;
-    private EditText senhaLogin;
-    private Button btnacesso;
-    private Resources resources;
+public class LoginActivity extends Activity {
 
+    private static final String TAG = "LoginActivity";
+
+    @Bind(R.id.email_login) EditText emailLogin;
+    @Bind(R.id.senha_login) EditText senhaLogin;
+    @Bind(R.id.btn_acesso) Button btnacesso;
+
+    private Resources resources;
     private String email;
     private String senha;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         initViews();
+
+        btnacesso.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+
+
     }
-    private void initViews() {
+
+   private void initViews() {
         resources = getResources();
 
         TextWatcher textWatcher = new TextWatcher() {
@@ -73,11 +90,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             findViewById(R.id.senha_login);
 
             senhaLogin.addTextChangedListener(textWatcher);
-            btnacesso=(Button)
 
-            findViewById(R.id.btn_acesso);
 
-            btnacesso.setOnClickListener(this);
         }
     private void callClearErrors(Editable s) {
         if (!s.toString().isEmpty()) {
@@ -85,14 +99,39 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v){
-        if (v.getId()==R.id.btn_acesso){
+    public void login(){
 
             if (validar()){
 
+                Log.d(TAG, "Login");
+
+                if (!validar()) {
+                    onLoginFailed();
+                    return;
+                }
+
+                btnacesso.setEnabled(false);
+
+                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                        R.style.AppTheme_PopupOverlay);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Autenticando...");
+                progressDialog.show();
+
                 email = emailLogin.getText().toString().trim();
                 senha = senhaLogin.getText().toString().trim();
+
+                // TODO: Implement your own authentication logic here.
+
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                // On complete call either onLoginSuccess or onLoginFailed
+                                onLoginSuccess();
+                                // onLoginFailed();
+                                progressDialog.dismiss();
+                            }
+                        }, 5000);
 
                 //SERVICES
                 Network e = new Network();
@@ -102,6 +141,21 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 //Toast.makeText(this, resources.getString(R.string.autentication), Toast.LENGTH_LONG).show();
             }
         }
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
+
+    public void onLoginSuccess() {
+        btnacesso.setEnabled(true);
+        finish();
+    }
+
+    public void onLoginFailed() {
+        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+
+        btnacesso.setEnabled(true);
     }
 
     /**

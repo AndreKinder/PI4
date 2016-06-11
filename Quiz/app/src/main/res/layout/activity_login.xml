@@ -65,7 +65,7 @@
         android:textColorHint="#27408b"
         android:textSize="20dp" />
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:orientation="horizontal"
         android:id="@+id/btn_acesso"
         android:text="@string/btn_acesso"
