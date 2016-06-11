@@ -192,17 +192,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     ps.codGrupo = 1;
 
                     //proxima activity
-                    //TODO:colocar proxima tela certa q é a de evento
-                    //Intent i = new Intent(LoginActivity.this, Tela_Aquecimento.class);
-                    //startActivity(i);
+                    Intent i = new Intent(LoginActivity.this, Evento.class);
+                    startActivity(i);
 
-                    Intent i = new Intent(LoginActivity.this, GroupSelectionActivity.class);
+                   /* Intent i = new Intent(LoginActivity.this, GroupSelectionActivity.class);
                     Bundle b = new Bundle();
                     b.putString("evento", "34409"); //Your id
                     b.putString("participanteId", json.getString("codParticipante")); //Your id
                     b.putString("proximaTela", Tela_Aquecimento.class.getName());
                     i.putExtras(b); //Put your id to your next Intent
-                    startActivity(i);
+                    startActivity(i);*/
 
                 }catch (Exception e)
                 {

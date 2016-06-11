@@ -25,7 +25,9 @@
         <activity android:name=".TelaValidacao" />
         <activity android:name=".Tela_Aquecimento" />
         <activity android:name=".ResultadoActivity" />
-        <activity android:name=".JogoTexto"></activity>
+        <activity android:name=".JogoTexto" />
+        <activity android:name=".Evento" />
+        <activity android:name=".JogoVerdadeiro"></activity>
     </application>
 
 </manifest>

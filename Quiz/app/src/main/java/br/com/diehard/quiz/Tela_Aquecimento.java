@@ -138,14 +138,13 @@ public class Tela_Aquecimento extends AppCompatActivity {
             boolean statusQuestao = false;
 
             //TODO:apagar essa linha depois
-            result = "{\"codTipoQuestao\":\"T\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
+            result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
             //result = "{\"codTipoQuestao\":null,\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
             try {
                 JSONObject json = new JSONObject(result);
 
                 if(!json.getString("codTipoQuestao").equals("null"))
                 {
-                    //TODO:Deletear o jogo.java
                     if(json.getString("codTipoQuestao").equalsIgnoreCase("T")) {
                         Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
                         i.putExtra("idEvento", idEvento);
@@ -159,7 +158,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
                     }
                     else if(json.getString("codTipoQuestao").equalsIgnoreCase("V"))
                     {
-                        Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
+                        Intent i = new Intent(Tela_Aquecimento.this, JogoVerdadeiro.class);
                         i.putExtra("idEvento", idEvento);
                         startActivity(i);
                     }
