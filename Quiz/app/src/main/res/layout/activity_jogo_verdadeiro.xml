@@ -23,7 +23,8 @@
         android:text="Verdadeiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:textColor="#1c6d1b"
+        android:textStyle="bold" />
 
 
     <Button
@@ -32,7 +33,8 @@
         android:text="Falso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:textColor="#ec0a0a"
+        android:textStyle="bold" />
 
 
 
