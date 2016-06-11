@@ -209,7 +209,6 @@ public class LoginActivity extends Activity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/participante/"+ email +"/"+ senha);
 
                 HttpURLConnection con = (HttpURLConnection)url.openConnection();

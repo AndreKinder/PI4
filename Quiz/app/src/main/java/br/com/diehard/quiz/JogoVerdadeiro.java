@@ -87,7 +87,6 @@ public class JogoVerdadeiro extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/questao/"+idEvento+"/"+idGrupo);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -141,7 +140,6 @@ public class JogoVerdadeiro extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/0/"+blnResposta);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();

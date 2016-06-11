@@ -103,7 +103,7 @@ public class JogoTexto extends AppCompatActivity {
             boolean statusQuestao = false;
 
             //TODO:apagar essa linha depois
-            result = "{\"codTipoQuestao\":\"T\",\"codQuestao\":5,\"textoQuestao\":\"Você sabe como foi feito o mundo?\",\"alternativas\":null,\"tempo\":null,\"codAssunto\":5}";
+            //result = "{\"codTipoQuestao\":\"T\",\"codQuestao\":5,\"textoQuestao\":\"Você sabe como foi feito o mundo?\",\"alternativas\":null,\"tempo\":null,\"codAssunto\":5}";
             try {
                 JSONObject json = new JSONObject(result);
 
@@ -131,7 +131,6 @@ public class JogoTexto extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/0/"+txtResposta);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();

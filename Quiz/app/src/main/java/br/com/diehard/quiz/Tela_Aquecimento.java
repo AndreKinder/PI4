@@ -54,7 +54,6 @@ public class Tela_Aquecimento extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/jogo/"+idEvento);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -80,7 +79,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "{\"status\":\"E\"}";
+            //result = "{\"status\":\"E\"}";
             try {
 
                 JSONObject json = new JSONObject(result);
@@ -115,7 +114,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
+
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/questao/"+idEvento+"/"+idGrupo);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -143,32 +142,28 @@ public class Tela_Aquecimento extends AppCompatActivity {
 
             //TODO:apagar essa linha depois
             //result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
-            result = "{\"codTipoQuestao\":\"A\",\"textoQuestao\":\"Teste 2\",\"tempo\":null,\"alternativas\":[{\"textoAlternativa\":\"Alternativa 1\",\"codAlternativa\":1,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 2\",\"codAlternativa\":2,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 3\",\"codAlternativa\":3,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 4\",\"codAlternativa\":4,\"codQuestao\":null}],\"codQuestao\":6,\"codAssunto\":null}";
+            //result = "{\"codTipoQuestao\":\"A\",\"textoQuestao\":\"Teste 2\",\"tempo\":null,\"alternativas\":[{\"textoAlternativa\":\"Alternativa 1\",\"codAlternativa\":1,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 2\",\"codAlternativa\":2,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 3\",\"codAlternativa\":3,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 4\",\"codAlternativa\":4,\"codQuestao\":null}],\"codQuestao\":6,\"codAssunto\":null}";
             try {
-                JSONObject json = new JSONObject(result);
+                if(result != "") {
+                    JSONObject json = new JSONObject(result);
 
-                if(!json.getString("codTipoQuestao").equals("null"))
-                {
-                    if(json.getString("codTipoQuestao").equalsIgnoreCase("T")) {
-                        Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
-                        i.putExtra("idEvento", idEvento);
-                        startActivity(i);
+                    if (!json.getString("codTipoQuestao").equals("null")) {
+                        if (json.getString("codTipoQuestao").equalsIgnoreCase("T")) {
+                            Intent i = new Intent(Tela_Aquecimento.this, JogoTexto.class);
+                            i.putExtra("idEvento", idEvento);
+                            startActivity(i);
+                        } else if (json.getString("codTipoQuestao").equalsIgnoreCase("A")) {
+                            Intent i = new Intent(Tela_Aquecimento.this, JogoAlternativa.class);
+                            i.putExtra("idEvento", idEvento);
+                            startActivity(i);
+                        } else if (json.getString("codTipoQuestao").equalsIgnoreCase("V")) {
+                            Intent i = new Intent(Tela_Aquecimento.this, JogoVerdadeiro.class);
+                            i.putExtra("idEvento", idEvento);
+                            startActivity(i);
+                        }
+                        statusQuestao = true;
                     }
-                    else if(json.getString("codTipoQuestao").equalsIgnoreCase("A"))
-                    {
-                        Intent i = new Intent(Tela_Aquecimento.this, JogoAlternativa.class);
-                        i.putExtra("idEvento", idEvento);
-                        startActivity(i);
-                    }
-                    else if(json.getString("codTipoQuestao").equalsIgnoreCase("V"))
-                    {
-                        Intent i = new Intent(Tela_Aquecimento.this, JogoVerdadeiro.class);
-                        i.putExtra("idEvento", idEvento);
-                        startActivity(i);
-                    }
-                    statusQuestao = true;
                 }
-
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
             }
@@ -191,7 +186,7 @@ public class Tela_Aquecimento extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
+
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/participante/grupo/" + idParticipante + "/" + idEvento);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -216,14 +211,15 @@ public class Tela_Aquecimento extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             //TODO:apagar essa linha depois
-            //result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
-            result = "12";
+            //result = "12";
             try {
                //JSONObject json = new JSONObject(result);
 
 
                 ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
-                idGrupo = ps.codGrupo;
+                //idGrupo = ps.codGrupo;
+                idGrupo = Integer.parseInt(result);
+                ps.codGrupo = idGrupo;
 
                 Network e = new Network();
                 e.execute((Void) null);

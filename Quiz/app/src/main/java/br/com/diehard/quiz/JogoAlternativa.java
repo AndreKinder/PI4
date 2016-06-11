@@ -106,7 +106,7 @@ public class JogoAlternativa extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "{\"codTipoQuestao\":\"A\",\"textoQuestao\":\"Teste 2\",\"tempo\":null,\"alternativas\":[{\"textoAlternativa\":\"Alternativa 1\",\"codAlternativa\":1,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 2\",\"codAlternativa\":2,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 3\",\"codAlternativa\":3,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 4\",\"codAlternativa\":4,\"codQuestao\":null}],\"codQuestao\":6,\"codAssunto\":null}";
+            //result = "{\"codTipoQuestao\":\"A\",\"textoQuestao\":\"Teste 2\",\"tempo\":null,\"alternativas\":[{\"textoAlternativa\":\"Alternativa 1\",\"codAlternativa\":1,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 2\",\"codAlternativa\":2,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 3\",\"codAlternativa\":3,\"codQuestao\":null},{\"textoAlternativa\":\"Alternativa 4\",\"codAlternativa\":4,\"codQuestao\":null}],\"codQuestao\":6,\"codAssunto\":null}";
             try {
                 JSONObject json = new JSONObject(result);
 
@@ -146,8 +146,7 @@ public class JogoAlternativa extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
-                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/"+idAlternativa+"/");
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/"+idAlternativa+"/0");
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -171,7 +170,7 @@ public class JogoAlternativa extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "true";
+            //result = "true";
             try {
                 //JSONObject json = new JSONObject(result);
                 if(result.equals("true"))

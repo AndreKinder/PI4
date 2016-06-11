@@ -29,13 +29,10 @@ public class Evento extends AppCompatActivity {
             btn_confirmar_evento.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
 
-                    /*Intent i = new Intent(Evento.this, Tela_Aquecimento.class);
-                    i.putExtra("idEvento",edit_id_evento.getText().toString().trim());
-                    startActivity(i);*/
+
 
                     ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
                     ps.codEvento = Integer.parseInt(edit_id_evento.getText().toString().trim());
-
                     Intent i = new Intent(Evento.this, GroupSelectionActivity.class);
                     Bundle b = new Bundle();
                     b.putString("evento", edit_id_evento.getText().toString().trim()); //Your id
@@ -44,6 +41,10 @@ public class Evento extends AppCompatActivity {
                     i.putExtras(b); //Put your id to your next Intent
                     startActivity(i);
 
+
+                    /*Intent i = new Intent(Evento.this, Tela_Aquecimento.class);
+                    i.putExtra("idEvento",edit_id_evento.getText().toString().trim());
+                    startActivity(i);*/
                 }
             });
         }
