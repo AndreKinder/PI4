@@ -46,12 +46,9 @@ public class JogoAlternativa extends AppCompatActivity {
         setContentView(R.layout.activity_jogo_alternativa);
 
         ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
-        //TODO:colocar o grupo nosingleton
         idGrupo = ps.codGrupo;
+        idEvento = ps.codEvento;
 
-        //get id do evento
-        Intent intent = getIntent();
-        idEvento = intent.getIntExtra("idEvento", 0);
 
         context = this;
         pergunta = (TextView) findViewById(R.id.texto_pergunta);

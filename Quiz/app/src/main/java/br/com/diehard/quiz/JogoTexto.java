@@ -41,12 +41,8 @@ public class JogoTexto extends AppCompatActivity {
         setContentView(R.layout.activity_jogo_texto);
 
         ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
-        //TODO:colocar o grupo nosingleton
         idGrupo = ps.codGrupo;
-
-        //get id do evento
-        Intent intent = getIntent();
-        idEvento = intent.getIntExtra("idEvento", 0);
+        idEvento = ps.codEvento;
 
         context = this;
         pergunta = (TextView) findViewById(R.id.texto_pergunta);
@@ -81,7 +77,6 @@ public class JogoTexto extends AppCompatActivity {
             String result = "";
 
             try {
-                //TODO: colocar o caminho certo do servidor
                 url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/questao/"+idEvento+"/"+idGrupo);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();

@@ -41,12 +41,9 @@ public class JogoVerdadeiro extends AppCompatActivity {
         setContentView(R.layout.activity_jogo_verdadeiro);
 
         ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
-        //TODO:colocar o grupo nosingleton
         idGrupo = ps.codGrupo;
+        idEvento = ps.codEvento;
 
-        //get id do evento
-        Intent intent = getIntent();
-        idEvento = intent.getIntExtra("idEvento", 0);
 
         context = this;
         pergunta = (TextView) findViewById(R.id.texto_pergunta);

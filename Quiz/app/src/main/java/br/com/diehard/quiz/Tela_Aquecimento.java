@@ -23,6 +23,7 @@ import java.net.URL;
 public class Tela_Aquecimento extends AppCompatActivity {
 
     private int idEvento;
+    private int idParticipante;
     private int idGrupo;
 
     @Override
@@ -31,16 +32,17 @@ public class Tela_Aquecimento extends AppCompatActivity {
         setContentView(R.layout.activity_tela__aquecimento);
 
         ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
-        //TODO:colocar o grupo nosingleton
-        idGrupo = ps.codGrupo;
-
-        //get id do evento
-        Intent intent = getIntent();
-        idEvento = intent.getIntExtra("idEvento", 0);
+        idEvento = ps.codEvento;
+        idParticipante = ps.codParticipante;
 
         //SERVICES
-        Network e = new Network();
-        e.execute((Void)null);
+        //Network e = new Network();
+        //e.execute((Void)null);
+
+        //carregar o id do grupó
+        NetworkGrupo ng = new NetworkGrupo();
+        ng.execute((Void) null);
+
     }
 
     //SERVICO
@@ -100,6 +102,8 @@ public class Tela_Aquecimento extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
             }
         }
+
+
     }
 
     //Servico de buscar questao ativa
@@ -175,6 +179,60 @@ public class Tela_Aquecimento extends AppCompatActivity {
                 Network e = new Network();
                 e.execute((Void) null);
             }
+        }
+
+
+    }
+
+    //Servico de buscar questao ativa
+    public class NetworkGrupo extends AsyncTask<Void, Void, String> {
+        protected String doInBackground(Void... params) {
+            URL url = null;
+            String result = "";
+
+            try {
+                //TODO: colocar o caminho certo do servidor
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/participante/grupo/" + idParticipante + "/" + idEvento);
+
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                InputStream in = con.getInputStream();
+
+                BufferedReader streamReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuilder responseStrBuilder = new StringBuilder();
+
+                String inputStr;
+                while ((inputStr = streamReader.readLine()) != null)
+                    responseStrBuilder.append(inputStr);
+
+                result = responseStrBuilder.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+
+            //TODO:apagar essa linha depois
+            //result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":null,\"textoQuestao\":null,\"alternativas\":null,\"tempo\":null,\"codAssunto\":null}";
+            result = "12";
+            try {
+               //JSONObject json = new JSONObject(result);
+
+
+                ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
+                idGrupo = ps.codGrupo;
+
+                Network e = new Network();
+                e.execute((Void) null);
+
+
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Servidor com problema", Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 
