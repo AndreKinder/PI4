@@ -242,8 +242,6 @@ public class LoginActivity extends Activity {
                     ps.codParticipante = json.getInt("codParticipante");
                     ps.email = json.getString("email");
                     ps.nome = json.getString("nmParticipante");
-                    //TODO:colocar o grupo certo depois
-                    ps.codGrupo = 1;
 
                     //proxima activity
                     Intent i = new Intent(LoginActivity.this, Evento.class);
