@@ -10,13 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.diehard.quiz.ResultadoActivity">
 
-    <TextView
+    <ImageView
+    android:src="@drawable/resultado"
     android:orientation="horizontal"
     android:layout_gravity="center_horizontal"
-    android:text="@string/texto_titulo_resultado"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="35sp"
+    android:layout_height="120dp"
     android:gravity="center"/>
 
     <ScrollView
@@ -37,7 +36,10 @@
         android:layout_gravity="center_horizontal"
         android:text="O grande vencedor foi:"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#34a270" />
 
     <TextView
         android:orientation="horizontal"
