@@ -111,7 +111,7 @@ public class JogoVerdadeiro extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             //TODO:apagar essa linha depois
-            result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":5,\"textoQuestao\":\"Você sabe como foi feito o mundo?\",\"alternativas\":null,\"tempo\":null,\"codAssunto\":5}";
+            //result = "{\"codTipoQuestao\":\"V\",\"codQuestao\":5,\"textoQuestao\":\"Você sabe como foi feito o mundo?\",\"alternativas\":null,\"tempo\":null,\"codAssunto\":5}";
             try {
                 JSONObject json = new JSONObject(result);
 
@@ -140,7 +140,7 @@ public class JogoVerdadeiro extends AppCompatActivity {
             String result = "";
 
             try {
-                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/0/"+blnResposta);
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/1/"+blnResposta);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -166,7 +166,7 @@ public class JogoVerdadeiro extends AppCompatActivity {
             boolean statusQuestao = false;
 
             //TODO:apagar essa linha depois
-            result = "true";
+            //result = "true";
             try {
                 //JSONObject json = new JSONObject(result);
                 if(result.equals("true"))

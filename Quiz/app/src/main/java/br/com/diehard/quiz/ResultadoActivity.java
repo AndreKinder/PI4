@@ -29,6 +29,8 @@ public class ResultadoActivity extends AppCompatActivity {
     private TextView campeao;
     private ProgressDialog progress;
 
+    private int idEvento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,23 +38,22 @@ public class ResultadoActivity extends AppCompatActivity {
         context = this;
         campeao = (TextView) findViewById(R.id.vencedor);
 
-        //get id do evento
-        Intent intent = getIntent();
-        int idEvento = intent.getIntExtra("idEvento", 0);
+        ParticipanteSingleton ps = ParticipanteSingleton.getInstance();
+        idEvento = ps.codEvento;
 
         //SERVICES
         Network e = new Network();
-        e.execute(idEvento);
+        e.execute((Void)null);
     }
 
     //SERVICO
-    public class Network extends AsyncTask<Integer, Void, String>
+    public class Network extends AsyncTask<Void, Void, String>
     {
         protected void onPreExecute(){
             progress = ProgressDialog.show(context, "", "Calculando os pontos dos grupos...", true);
         }
 
-        protected String doInBackground (Integer... idEvento)
+        protected String doInBackground (Void... param)
         {
             URL url = null;
             String result = "";

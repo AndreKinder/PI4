@@ -88,7 +88,8 @@ public class Tela_Aquecimento extends AppCompatActivity {
                 if(statusEvento.equals("E"))
                 {
                     //TODO:ver questao em aberto questaoStatus = A
-                    new NetworkQuestao().execute((Void)null);
+                    NetworkQuestao nq = new NetworkQuestao();
+                    nq.execute((Void) null);
                 }
                 else if(statusEvento.equals("F"))
                 {
