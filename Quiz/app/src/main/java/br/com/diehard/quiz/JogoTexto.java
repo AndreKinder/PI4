@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class JogoTexto extends AppCompatActivity {
 
@@ -34,6 +38,10 @@ public class JogoTexto extends AppCompatActivity {
 
     private Context context;
     private ProgressDialog progress;
+
+    private ProgressBar mProgressBar;
+    private CountDownTimer mCountDownTimer;
+    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +58,7 @@ public class JogoTexto extends AppCompatActivity {
 
         enviar = (Button) findViewById(R.id.btn_responder);
         enviar.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 txtResposta = resposta.getText().toString().trim();
 
                 NetworkResposta r = new NetworkResposta();
@@ -61,6 +68,28 @@ public class JogoTexto extends AppCompatActivity {
 
         NetworkQuestao e = new NetworkQuestao();
         e.execute((Void) null);
+
+        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar.setProgress(i);
+        mCountDownTimer=new CountDownTimer(30000,1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //Log.v("Log_tag", "Tick of Progress"+ i+ millisUntilFinished);
+                i++;
+                mProgressBar.setProgress(i);
+
+            }
+
+            @Override
+            public void onFinish() {
+                //Do what you want
+                i++;
+                mProgressBar.setProgress(i);
+                Intent i = new Intent(JogoTexto.this, Tela_Aquecimento.class);
+                startActivity(i);
+            }
+        };
 
     }
 
@@ -115,6 +144,8 @@ public class JogoTexto extends AppCompatActivity {
             }
 
             progress.dismiss();
+
+            mCountDownTimer.start();
         }
     }
 
@@ -131,7 +162,7 @@ public class JogoTexto extends AppCompatActivity {
             String result = "";
 
             try {
-                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/0/"+txtResposta);
+                url = new URL("http://tsitomcat.azurewebsites.net/quiz/rest/resposta/"+idGrupo+"/"+idQuestao+"/1/"+txtResposta);
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 InputStream in = con.getInputStream();
@@ -162,6 +193,8 @@ public class JogoTexto extends AppCompatActivity {
                 //JSONObject json = new JSONObject(result);
                 if(result.equals("true"))
                 {
+                    mCountDownTimer.cancel();
+                    mCountDownTimer = null;
                     Intent i = new Intent(JogoTexto.this, Tela_Aquecimento.class);
                     startActivity(i);
                 }

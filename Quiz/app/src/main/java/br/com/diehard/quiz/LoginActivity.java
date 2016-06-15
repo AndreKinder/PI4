@@ -40,6 +40,7 @@ public class LoginActivity extends Activity {
     private Resources resources;
     private String email;
     private String senha;
+    private ProgressDialog progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,20 +111,20 @@ public class LoginActivity extends Activity {
                     return;
                 }
 
-                btnacesso.setEnabled(false);
+                //btnacesso.setEnabled(false);
 
-                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+               /* final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                         R.style.AppTheme_PopupOverlay);
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Autenticando...");
-                progressDialog.show();
+                progressDialog.show();*/
 
                 email = emailLogin.getText().toString().trim();
                 senha = senhaLogin.getText().toString().trim();
 
                 // TODO: Implement your own authentication logic here.
 
-                new android.os.Handler().postDelayed(
+                /*new android.os.Handler().postDelayed(
                         new Runnable() {
                             public void run() {
                                 // On complete call either onLoginSuccess or onLoginFailed
@@ -131,7 +132,7 @@ public class LoginActivity extends Activity {
                                 // onLoginFailed();
                                 progressDialog.dismiss();
                             }
-                        }, 5000);
+                        }, 5000);*/
 
                 //SERVICES
                 Network e = new Network();
@@ -203,6 +204,10 @@ public class LoginActivity extends Activity {
     //SERVICO
     public class Network extends AsyncTask<Void, Void, String>
     {
+        protected void onPreExecute(){
+            progress = ProgressDialog.show(LoginActivity.this , "", "Autenticando..", true);
+        }
+
         protected String doInBackground (Void... params)
         {
             URL url = null;
@@ -262,6 +267,7 @@ public class LoginActivity extends Activity {
             else
             {
                 Toast.makeText(getApplicationContext(), "Usuario ou/e senha invalido", Toast.LENGTH_LONG).show();
+                progress.dismiss();
             }
         }
     }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import br.com.pi.pi4.GroupSelectionActivity;
 
 public class JogoAlternativa extends AppCompatActivity {
 
@@ -39,6 +45,13 @@ public class JogoAlternativa extends AppCompatActivity {
 
     private TextView pergunta;
     private EditText respoderAlternativa;
+
+    //private Timer repeatTaskRegra;
+    private ProgressBar mProgressBar;
+    private CountDownTimer mCountDownTimer;
+    private int i=0;
+
+    private boolean isTaskCompleted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +69,7 @@ public class JogoAlternativa extends AppCompatActivity {
 
         enviar = (Button) findViewById(R.id.btn_confirmar_alternatviva);
         enviar.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 idAlternativa = respoderAlternativa.getText().toString().trim();
 
                 NetworkResposta r = new NetworkResposta();
@@ -67,6 +79,30 @@ public class JogoAlternativa extends AppCompatActivity {
 
         NetworkQuestao e = new NetworkQuestao();
         e.execute((Void) null);
+
+        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar.setProgress(i);
+
+        mCountDownTimer = new CountDownTimer(30000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //Log.v("Log_tag", "Tick of Progress"+ i+ millisUntilFinished);
+                i++;
+                mProgressBar.setProgress(i);
+            }
+
+            @Override
+            public void onFinish() {
+                //Do what you want
+                i++;
+                mProgressBar.setProgress(i);
+                Intent i = new Intent(JogoAlternativa.this, Tela_Aquecimento.class);
+                startActivity(i);
+            }
+        };
+
+
     }
 
     //Servico de buscar questao ativa
@@ -124,7 +160,7 @@ public class JogoAlternativa extends AppCompatActivity {
                     TextView id_alternativa = (TextView) item.findViewById(R.id.id_alternativa);
                     TextView texto_alternativa = (TextView) item.findViewById(R.id.texto_alternativa);
                     //id_alternativa.setText(itemJson.getString("codAlternativa"));
-                    texto_alternativa.setText(itemJson.getString("codAlternativa")+" - "+itemJson.getString("textoAlternativa"));
+                    texto_alternativa.setText(itemJson.getString("codAlternativa") + " - " + itemJson.getString("textoAlternativa"));
                     group.addView(item);
                 }
             } catch (Exception e) {
@@ -132,6 +168,26 @@ public class JogoAlternativa extends AppCompatActivity {
             }
 
             progress.dismiss();
+
+
+           /* repeatTaskRegra = new Timer();
+            repeatTaskRegra. schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    JogoAlternativa.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            repeatTaskRegra.cancel();
+                            Intent i = new Intent(JogoAlternativa.this, Tela_Aquecimento.class);
+                            startActivity(i);
+                        }
+                    });
+                }
+            }, 30000);
+            //}, 5000, 5000);*/
+
+            mCountDownTimer.start();
+
         }
     }
     public class NetworkResposta extends AsyncTask<Void, Void, String>
@@ -175,6 +231,9 @@ public class JogoAlternativa extends AppCompatActivity {
                 //JSONObject json = new JSONObject(result);
                 if(result.equals("true"))
                 {
+                    mCountDownTimer.cancel();
+                    mCountDownTimer = null;
+
                     Intent i = new Intent(JogoAlternativa.this, Tela_Aquecimento.class);
                     startActivity(i);
                 }
@@ -187,6 +246,7 @@ public class JogoAlternativa extends AppCompatActivity {
             }
 
             progress.dismiss();
+
         }
     }
     //sobreescrita para inutilizar o botao voltar

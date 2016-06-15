@@ -98,7 +98,8 @@ public class ResultadoActivity extends AppCompatActivity {
                     TextView nomeGrupo = (TextView) item.findViewById(R.id.nome_grupo);
                     TextView pontos = (TextView) item.findViewById(R.id.pontos);
                     nomeGrupo.setText(itemJson.getString("nmGrupo"));
-                    pontos.setText(itemJson.getString("pontosGrupo") +"/" +itemJson.getString("pontosTotal"));
+                    //pontos.setText(itemJson.getString("pontosGrupo") +"/" +itemJson.getString("pontosTotal"));
+                    pontos.setText(itemJson.getString("pontosGrupo") +" pontos");
                     group.addView(item);
 
                     //texto para o vencedor

@@ -16,9 +16,9 @@
     <!-- Strings de texto das regras -->
 
     <string name="regra1">. O jogo só terá início após os grupos estarem fechados;</string>
-    <string name="regra2">. Você tem xx segundos para responder a questão;</string>
-    <string name="regra3">. A cada acerto será computado xx pontos na pontuação total;</string>
-    <string name="regra4">. A cada erro será removido xx pontos na pontuação total;</string>
+    <string name="regra2">. Você tem 30 segundos para responder a questão;</string>
+    <string name="regra3">. A cada acerto será computado 1 ponto na pontuação total;</string>
+    <!--string name="regra4">. A cada erro será removido xx pontos na pontuação total;</string-->
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

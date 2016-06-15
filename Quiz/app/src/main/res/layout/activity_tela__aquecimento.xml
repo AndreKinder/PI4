@@ -47,13 +47,6 @@
         android:layout_height="wrap_content"
         android:textStyle="italic"
         android:textColor="#6f1414" />
-    <TextView
-        android:textSize="18dp"
-        android:text="@string/regra4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="italic"
-        android:textColor="#6f1414" />
 
     <ProgressBar
         android:layout_width="wrap_content"

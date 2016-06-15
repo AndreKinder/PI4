@@ -7,11 +7,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/id_alternativa"/>
+        android:id="@+id/id_alternativa"
+        android:textSize="25sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
         android:id="@+id/texto_alternativa"/>
 
 </LinearLayout>
