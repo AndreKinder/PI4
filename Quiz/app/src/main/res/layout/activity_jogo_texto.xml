@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:id="@+id/texto_pergunta"
         android:layout_width="match_parent"
-        android:textSize="30sp"
+
         android:layout_height="wrap_content" />
 
     <EditText
